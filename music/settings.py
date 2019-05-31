@@ -123,7 +123,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [ #정적파일이 위치한 경로
-    os.path.join(BASE_DIR, 'crud', 'assets', 'images'),
+    os.path.join(BASE_DIR, 'crud', 'assets', 'images', 'static'),
     ]
 
 MEDIA_URL = '/media/' #static_url 과 비슷함 업로드된 이미지의 주소를 만들어줌

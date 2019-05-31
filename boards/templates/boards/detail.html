@@ -8,55 +8,96 @@
     <h1 class = 'text-center'>제목 : {{board.title}}</h1>
         <hr>
         <div class="card-body">
-        
         </div>
-           <a href="{%url 'boards:like' board.pk%}" class="card-link">
-               <i class='fas fa-heatr fa-lg' style='coler:crimson'></i>
+            <a href="{%url 'boards:like' board.pk%}" class="card-link">
                 {%if user in board.like_users.all%}
-                    
+                    <i class='fas fa-heart fa-lg' style='color:crimson'></i>
                 {%else%}
-                    <i class='fas fa-heatr fa-lg' style='coler:black'></i>
+                    <i class='fas fa-heart fa-lg' style='color:black'></i>
                 {%endif%}
             </a>
             <p class='card-text text-right'>{{board.like_users.count}}명이 좋아합니다.</p>
-        <!--{%if board.file %}-->
-            <!--<audio src={{board.file.url}}></audio>-->
-            <!--<a href={{board.file.url}}>test</a>-->
-        <!--{%endif%}-->
+          
+        {%if board.file %}
+            <audio controls>
+                <source src="{{board.file.url}}" type="audio/mp3 ">
+            </audio>
+        {% endif %}
         <p class = 'text-center h2'>내용 : {{board.content}}</p>
         <p class = 'text-right'>글 작성 시간 : {{board.created_at}}</p>
         <p class = 'text-right'>글 수정 시간 : {{board.updated_at}}</p>
-        
+        <hr>
+        <a href="javascript:void(0);"><span>공유</span></a>
+        <a id="kakao-link-btn" href="javascript:;"> 
+        <img src="{%static 'boards/images/icon_kakao.png'%}">
+        </a>
     <hr>
     <div class= 'row'>
         <div class='col-lg-9'></div>
         <div class="btn-group">
-            <a class="btn btn-primary btn-sm" role="button" href="{%url 'boards:index' %}">[게시글로 돌아가기]</a>
-            <a href="{%url 'boards:edit' board.pk %}" class="btn btn-primary btn-sm" role="button">글수정</a>
+            <a class="btn btn-outline-primary btn-sm" role="button" href="{%url 'boards:index' %}">[게시글로 돌아가기]</a>
+            <a href="{%url 'boards:edit' board.pk %}" class="btn btn-outline-primary btn-sm" role="button">글수정</a>
             <form style = 'inline' action = '{%url 'boards:delete' board.pk %}' method='POST'>
                 {%csrf_token%}
-                <input class="btn btn-primary btn-sm" type="submit" value="글삭제"/>
+                <input class="btn btn-outline-primary btn-sm" type="submit" value="글삭제"/>
             </form>
         </div>
     </div>
-    
         
     <label class="col-sm-2 control-label" for="formGroupInputSmall">댓글달기</label>
-        <form action = "{% url 'boards:comments_create' board.pk%}", method='POST'>
+        <form action = "{% url 'boards:comments_create' board.pk %}", method='POST'>
             {%csrf_token%}
             <input class="form-control" type="text" name="content" id="formGroupInputSmall" placeholder="20자 내로 입력해 주세요!">
-            <input class="btn btn-primary" type="submit" value="댓글작성"/>
+            <input class="btn btn-outline-primary" type="submit" value="댓글작성"/>
         </form>
     <hr>
     {%for comment in comments%}
         <li>{{comment.content}}</li>
         <form action = "{%url 'boards:comment_delete' board.pk comment.pk%}" method='POST'>
             {%csrf_token%}
-            <input class="btn btn-primary btn-sm" type="submit" value="댓글삭제"/>
+            <input class="btn btn-outline-primary btn-sm" type="submit" value="댓글삭제"/>
         </form>
     {%empty%}
         <p><b>댓글이 없습니다.</b></p>
     {%endfor%}
     
+    <script type="text/javascript">
+     Kakao.init('518f2fb1a9a14c72e43f5e123c898479');
+    Kakao.Link.createDefaultButton({
+      container: '#kakao-link-btn',
+      objectType: 'feed',
+      content: {
+        title: '워터멜론',
+        description: '#감성, #음악, #성공적',
+        imageUrl: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        link: {
+          mobileWebUrl: 'https://python-yongtu.c9users.io/boards',
+          webUrl: 'https://python-yongtu.c9users.io/boards'
+        }
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://python-yongtu.c9users.io/boards',
+            webUrl: 'https://python-yongtu.c9users.io/boards'
+          }
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'https://python-yongtu.c9users.io/boards',
+            webUrl: 'https://python-yongtu.c9users.io/boards'
+          }
+        }
+      ]
+    });
+        
+    </script>
 {%endblock%}
 

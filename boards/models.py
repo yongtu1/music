@@ -7,6 +7,7 @@ class Board(models.Model):
     file= models.FileField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    board_num = models.IntegerField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_boards')
     
@@ -21,4 +22,4 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
     def __str__(self):
-        return f'<Board({self.board_id}): Comment({self.id})>'
+        return f'<Board({self.board_id}): Comment({self.content})>'

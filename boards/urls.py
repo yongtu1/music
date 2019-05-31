@@ -4,6 +4,7 @@ from . import views
 app_name = 'boards'
 
 urlpatterns = [
+    path('<int:board_num>/', views.search),
     path('<int:board_pk>/like/',views.like, name='like'),
     path('<int:board_pk>/delete/', views.delete, name='delete'),
     path('<int:board_pk>/<int:comment_pk>/comment_delete/', views.comment_delete, name='comment_delete'),

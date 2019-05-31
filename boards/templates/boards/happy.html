@@ -1,7 +1,19 @@
-{% extends 'boards/base.html' %}
-
-{% block body%}
-<table class="table table-hover">
+{%extends 'boards/base.html'%}
+{%load static%}
+{%block body%}
+    <div class = 'row'>
+        <a href="/boards/happy.html/" class="btn btn-info btn-lg" role="button">기쁨</a>
+        <a href="" class="btn btn-info btn-lg" role="button">게시판2</a>
+        <a href="" class="btn btn-info btn-lg" role="button">게시판3</a>
+        <a href="" class="btn btn-info btn-lg" role="button">게시판4</a>
+        <a href="" class="btn btn-info btn-lg" role="button">게시판5</a>
+    </div>
+    {%if user.is_authenticated%}
+        <a href="{%url 'boards:new' %}"><p class = 'text-right'>게시글 작성하기</p></a>
+    {%else%}
+        <p class='text-right'><a href="{%url 'accounts:login' %}">[새 글을 작성하려면 로그인 해주세요]</a></p>
+    {%endif%}    
+    <table class="table table-hover">
         <thead>
             <tr>
                 <td>노래 제목</td>
@@ -19,4 +31,4 @@
         </tbody>
         {%endfor%}
     </table>
-{% endblock%}
+{%endblock%}
