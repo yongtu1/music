@@ -1,0 +1,22 @@
+{% extends 'boards/base.html' %}
+
+{% block body%}
+<table class="table table-hover">
+        <thead>
+            <tr>
+                <td>노래 제목</td>
+                <td>좋아하는 사람 수</td>
+                <td>작성자</td>
+            </tr>
+        </thead>
+        {%for board in boards%}
+        <tbody>   
+            <tr style=cursor:pointer; onClick=location.href="{%url 'boards:detail' board.pk %}">
+                <td>{{board.title}}</td>
+                <td>0 </td>
+                <td>{{ board.user}}</td>
+            </tr>
+        </tbody>
+        {%endfor%}
+    </table>
+{% endblock%}
